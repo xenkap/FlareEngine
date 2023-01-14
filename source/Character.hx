@@ -376,7 +376,7 @@ class Character extends FlxSprite
 			ghost.y = y;
 			ghost.scale = scale;
 			ghost.angle = angle;
-			ghost.offset.set(animOffsets.get(animation.curAnim.name)[0], animOffsets.get(animation.curAnim.name)[1]);
+			ghost.offset.set(offset.x, offset.y);
 			ghost.animation.play(animation.curAnim.name, true, false, animation.curAnim.curFrame);
 			ghost.flipX = flipX;
 			ghost.flipY = flipY;
