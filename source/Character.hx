@@ -35,6 +35,8 @@ typedef CharacterFile = {
 	var flip_x:Bool;
 	var no_antialiasing:Bool;
 	var healthbar_colors:Array<Int>;
+	var kapi_held:Bool;
+	var is_playable:Bool;
 }
 
 typedef AnimArray = {
@@ -72,6 +74,9 @@ class Character extends FlxSprite
 	public var cameraPosition:Array<Float> = [0, 0];
 
 	public var hasMissAnimations:Bool = false;
+
+	public var kapiHeld:Bool = false;
+	public var originalFlipX:Bool = false;
 
 	//Used on Character Editor
 	public var imageFile:String = '';
@@ -182,9 +187,12 @@ class Character extends FlxSprite
 				positionArray = json.position;
 				cameraPosition = json.camera_position;
 
+				kapiHeld = json.kapi_held;
+
 				healthIcon = json.healthicon;
 				singDuration = json.sing_duration;
 				flipX = !!json.flip_x;
+				originalFlipX = flipX;
 				if(json.no_antialiasing) {
 					antialiasing = false;
 					noAntialiasing = true;
@@ -374,10 +382,16 @@ class Character extends FlxSprite
 		var daOffset = animOffsets.get(AnimName);
 		if (animOffsets.exists(AnimName))
 		{
-			offset.set(daOffset[0], daOffset[1]);
+			if (flipX)
+				offset.set(daOffset[0] * -1 - (width - frameWidth), daOffset[1]);
+			else
+				offset.set(daOffset[0], daOffset[1]);
 		}
 		else
-			offset.set(0, 0);
+			if (flipX)
+				offset.set(0 * -1 - (width - frameWidth), 0);
+			else
+				offset.set(0, 0);
 
 		if (curCharacter.startsWith('gf'))
 		{

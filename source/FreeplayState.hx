@@ -522,6 +522,14 @@ class FreeplayState extends MusicBeatState
 		{
 			curDifficulty = newPos;
 		}
+
+		if (Paths.fileExists('images/freeplaybg/' + songs[curSelected].songName.toLowerCase() + '.png', IMAGE, false)) {
+			bg.loadGraphic(Paths.image('freeplaybg/' + songs[curSelected].songName.toLowerCase()));
+		} else if (Paths.fileExists('images/freeplaybg/w_' + WeekData.getWeekFileName().toLowerCase() + '.png', IMAGE, false)) {
+			bg.loadGraphic(Paths.image('freeplaybg/w_' + WeekData.getWeekFileName().toLowerCase()));
+		} else {
+			bg.loadGraphic(Paths.image('menuDesat'));
+		}
 	}
 
 	private function positionHighscore() {
