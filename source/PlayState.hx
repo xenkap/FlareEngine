@@ -4651,9 +4651,12 @@ class PlayState extends MusicBeatState
 				char = gf;
 			}
 
-			if(char != null)
+			if (char != null)
 			{
-				char.playAnim(animToPlay, true);
+				if (!note.isSustainNote || !char.kapiHeld)
+					char.playAnim(animToPlay, true);
+				else if (animToPlay != char.animation.curAnim.name)
+					char.playAnim(animToPlay, true);
 				char.holdTimer = 0;
 			}
 		}
@@ -4731,13 +4734,19 @@ class PlayState extends MusicBeatState
 				{
 					if(gf != null)
 					{
-						gf.playAnim(animToPlay + note.animSuffix, true);
+						if (!note.isSustainNote || !gf.kapiHeld)
+							gf.playAnim(animToPlay + note.animSuffix, true);
+						else if (animToPlay != gf.animation.curAnim.name)
+							gf.playAnim(animToPlay + note.animSuffix, true);
 						gf.holdTimer = 0;
 					}
 				}
 				else
 				{
-					boyfriend.playAnim(animToPlay + note.animSuffix, true);
+					if (!note.isSustainNote || !boyfriend.kapiHeld)
+						boyfriend.playAnim(animToPlay + note.animSuffix, true);
+					else if (animToPlay != boyfriend.animation.curAnim.name)
+						boyfriend.playAnim(animToPlay + note.animSuffix, true);
 					boyfriend.holdTimer = 0;
 				}
 
