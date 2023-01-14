@@ -4653,10 +4653,10 @@ class PlayState extends MusicBeatState
 
 			if (char != null)
 			{
-				if (!note.isSustainNote || !char.kapiHeld)
+				if (!note.isSustainNote || !char.kapiHeld || !char.lastAnims.contains(animToPlay))
 					char.playAnim(animToPlay, true);
-				else if (animToPlay != char.animation.curAnim.name)
-					char.playAnim(animToPlay, true);
+				else if (animToPlay != char.animation.curAnim.name && char.lastAnims.contains(animToPlay))
+					char.showGhost();
 				char.holdTimer = 0;
 			}
 		}
@@ -4734,19 +4734,19 @@ class PlayState extends MusicBeatState
 				{
 					if(gf != null)
 					{
-						if (!note.isSustainNote || !gf.kapiHeld)
-							gf.playAnim(animToPlay + note.animSuffix, true);
-						else if (animToPlay != gf.animation.curAnim.name)
-							gf.playAnim(animToPlay + note.animSuffix, true);
+						if (!note.isSustainNote || !gf.kapiHeld || !gf.lastAnims.contains(animToPlay) || gf.animation.curAnim.name != animToPlay)
+							gf.playAnim(animToPlay, true);
+						else if (animToPlay != gf.animation.curAnim.name && gf.lastAnims.contains(animToPlay))
+							gf.showGhost();
 						gf.holdTimer = 0;
 					}
 				}
 				else
 				{
-					if (!note.isSustainNote || !boyfriend.kapiHeld)
-						boyfriend.playAnim(animToPlay + note.animSuffix, true);
-					else if (animToPlay != boyfriend.animation.curAnim.name)
-						boyfriend.playAnim(animToPlay + note.animSuffix, true);
+					if (!note.isSustainNote || !boyfriend.kapiHeld || !boyfriend.lastAnims.contains(animToPlay) || boyfriend.animation.curAnim.name != animToPlay)
+						boyfriend.playAnim(animToPlay, true);
+					else if (animToPlay != boyfriend.animation.curAnim.name && boyfriend.lastAnims.contains(animToPlay))
+						boyfriend.showGhost();
 					boyfriend.holdTimer = 0;
 				}
 

@@ -82,11 +82,12 @@ class Character extends FlxSprite
 	public var imageFile:String = '';
 	public var jsonScale:Float = 1;
 	public var noAntialiasing:Bool = false;
-	public var originalFlipX:Bool = false;
 	public var healthColorArray:Array<Int> = [255, 0, 0];
 
 	public var ghost:FlxSprite;
 	var ghostTween:FlxTween;
+
+	public var lastAnims:Array<String> = [];
 
 	public static var DEFAULT_CHARACTER:String = 'bf'; //In case a character is missing, it will use BF on its place
 	public function new(x:Float, y:Float, group:String, ?character:String = 'bf', ?isPlayer:Bool = false)
@@ -321,6 +322,7 @@ class Character extends FlxSprite
 			}
 		}
 		super.update(elapsed);
+		trace('$lastAnims');
 	}
 
 	public var danced:Bool = false;
@@ -347,6 +349,23 @@ class Character extends FlxSprite
 		}
 	}
 
+	public function showGhost() {
+		ghost.blend = HARDLIGHT;
+		ghost.alpha = 0.8;
+		ghost.visible = true;
+
+		if (ghostTween != null)
+			ghostTween.cancel();
+		ghost.color = FlxColor.fromRGB(healthColorArray[0] + 50, healthColorArray[1] + 50, healthColorArray[2] + 50);
+		ghostTween = FlxTween.tween(ghost, {alpha: 0}, 0.75, {
+			ease: FlxEase.linear,
+			onComplete: function(twn:FlxTween)
+			{
+				ghostTween = null;
+			}
+		});
+	}
+
 	public function playAnim(AnimName:String, Force:Bool = false, Reversed:Bool = false, Frame:Int = 0):Void
 	{
 		if (visible && animation.curAnim != null && !animation.curAnim.finished &&
@@ -361,21 +380,12 @@ class Character extends FlxSprite
 			ghost.animation.play(animation.curAnim.name, true, false, animation.curAnim.curFrame);
 			ghost.flipX = flipX;
 			ghost.flipY = flipY;
-			ghost.blend = HARDLIGHT;
-			ghost.alpha = 0.8;
-			ghost.visible = true;
-
-			if (ghostTween != null)
-				ghostTween.cancel();
-			ghost.color = FlxColor.fromRGB(healthColorArray[0] + 50, healthColorArray[1] + 50, healthColorArray[2] + 50);
-			ghostTween = FlxTween.tween(ghost, {alpha: 0}, 0.75, {
-				ease: FlxEase.linear,
-				onComplete: function(twn:FlxTween)
-				{
-					ghostTween = null;
-				}
-			});
+			showGhost();
+		} else {
+			lastAnims = [];
 		}
+		if (!lastAnims.contains(AnimName))
+			lastAnims.push(AnimName);
 		specialAnim = false;
 		animation.play(AnimName, Force, Reversed, Frame);
 

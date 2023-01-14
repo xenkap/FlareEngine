@@ -489,7 +489,6 @@ class CharacterEditorState extends MusicBeatState
 				character.setPosition(character.positionArray[0] + OFFSET_X + 100, character.positionArray[1]);
 
 				character.kapiHeld = parsedJson.kapi_held;
-				character.trailColor = parsedJson.trail_color;
 			}
 
 			reloadCharacterImage();
@@ -729,8 +728,7 @@ class CharacterEditorState extends MusicBeatState
 				fps: Math.round(animationNameFramerate.value),
 				loop: animationLoopCheckBox.checked,
 				indices: indices,
-				offsets: lastOffsets,
-				unique: ''
+				offsets: lastOffsets
 			};
 			if (indices != null && indices.length > 0)
 			{
@@ -1497,8 +1495,7 @@ class CharacterEditorState extends MusicBeatState
 			"healthbar_colors": char.healthColorArray,
 
 			"is_playable": char.isPlayer,
-			"kapi_held": char.kapiHeld,
-			"trail_color": char.trailColor
+			"kapi_held": char.kapiHeld
 		};
 
 		var data:String = Json.stringify(json, "\t");
