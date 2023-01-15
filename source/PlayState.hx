@@ -82,6 +82,20 @@ class PlayState extends MusicBeatState
 	public static var STRUM_X = 42;
 	public static var STRUM_X_MIDDLESCROLL = -278;
 
+	#if html5
+	public static var ratingStuff:Array<Dynamic> = [
+		['???', 0.2],
+		['???', 0.4],
+		['???', 0.5],
+		['???', 0.6],
+		['???', 0.69],
+		['???', 0.7],
+		['???', 0.8],
+		['???', 0.9],
+		['???', 1],
+		['???', 1]
+	];
+	#else
 	public static var ratingStuff:Array<Dynamic> = [
 		['You Suck!', 0.2], //From 0% to 19%
 		['Shit', 0.4], //From 20% to 39%
@@ -94,6 +108,7 @@ class PlayState extends MusicBeatState
 		['Sick!', 1], //From 90% to 99%
 		['Perfect!!', 1] //The value on this one isn't used actually, since Perfect is always "1"
 	];
+	#end
 
 	//event variables
 	private var isCameraOnForcedPos:Bool = false;

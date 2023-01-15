@@ -7,6 +7,7 @@ import openfl.text.TextFormat;
 import flixel.math.FlxMath;
 import flixel.FlxG;
 import flixel.FlxState;
+import flixel.FlxSubState;
 
 #if gl_stats
 import openfl.display._internal.stats.Context3DStats;
@@ -88,6 +89,9 @@ class FPS extends TextField
 		{
 			text = "FPS: " + currentFPS;
 			text += "\nState: " + Type.getClass( FlxG.state );
+			// TODO: Add substate info (idk how to get it :skull:)
+			
+
 			var memoryMegas:Float = 0;
 			
 			#if openfl
