@@ -90,6 +90,8 @@ class FPS extends TextField
 			text = "FPS: " + currentFPS;
 			text += "\nState: " + Type.getClass( FlxG.state );
 			// TODO: Add substate info (idk how to get it :skull:)
+			//text += "\nSubstate: " + Type.getClass( FlxG.subState ); Yhis doesn't work as fricking flxg.substate just doesn't exist
+			//yet FlxG.State is a thing so annoying
 			
 
 			var memoryMegas:Float = 0;

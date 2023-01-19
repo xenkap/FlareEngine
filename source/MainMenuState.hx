@@ -165,6 +165,7 @@ class MainMenuState extends MusicBeatState
 		FlxTween.tween(beef, {x: 725}, 0.9, {ease: FlxEase.quartInOut});
 
 		camGame.follow(camFollowPos, null, 1);
+		#if !html5
 		var versionShit:FlxText = new FlxText(12, FlxG.height - 44, 0, "Flare Engine v" + Application.current.meta.get('version'), 12);
 		versionShit.scrollFactor.set();
 		versionShit.setFormat("VCR OSD Mono", 16, FlxColor.WHITE, LEFT, FlxTextBorderStyle.OUTLINE, FlxColor.BLACK);
@@ -181,6 +182,12 @@ class MainMenuState extends MusicBeatState
 		versionShit.scrollFactor.set();
 		versionShit.setFormat("VCR OSD Mono", 16, FlxColor.WHITE, RIGHT, FlxTextBorderStyle.OUTLINE, FlxColor.BLACK);
 		add(versionShit);
+		#else
+		var versionShit:FlxText = new FlxText(12, FlxG.height - 44, 0, "UNOFFICAL BUILD! \n PLEASE DONT REPORT BUGS ABOUT THIS ONE!", 12);
+		versionShit.scrollFactor.set();
+		versionShit.setFormat("VCR OSD Mono", 16, FlxColor.WHITE, LEFT, FlxTextBorderStyle.OUTLINE, FlxColor.BLACK);
+		add(versionShit);
+		#end
 
 		// NG.core.calls.event.logEvent('swag').send();
 

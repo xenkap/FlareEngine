@@ -13,12 +13,15 @@ class Boyfriend extends Character
 
 	public function new(x:Float, y:Float, ?char:String = 'bf')
 	{
+		#if html5
+		super(x, y, 'bf', char, false);
+		#else
 		super(x, y, 'bf', char, true);
+		#end
 	}
 
 	override function update(elapsed:Float)
 	{
-		#if not html5
 		if (!debugMode && animation.curAnim != null)
 		{
 			if (animation.curAnim.name.startsWith('sing'))
@@ -38,10 +41,6 @@ class Boyfriend extends Character
 				playAnim('deathLoop');
 			}
 		}
-		#else
-		playAnim('miss', true, false, 10);
-		#end
-
 		super.update(elapsed);
 	}
 }
