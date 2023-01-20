@@ -1014,11 +1014,11 @@ class CharacterEditorState extends MusicBeatState
 			--i;
 		}
 		charLayer.clear();
-		ghostChar = new Character(0, 0, daAnim, !isDad);
+		ghostChar = new Character(0, 0, '', daAnim, !isDad);
 		ghostChar.debugMode = true;
 		ghostChar.alpha = 0.6;
 
-		char = new Character(0, 0, daAnim, !isDad);
+		char = new Character(0, 0, '', daAnim, !isDad);
 		if (char.animationsArray[0] != null)
 		{
 			char.playAnim(char.animationsArray[0].anim, true);
