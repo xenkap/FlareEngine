@@ -8,6 +8,7 @@ import flixel.math.FlxMath;
 import flixel.FlxG;
 import flixel.FlxState;
 import flixel.FlxSubState;
+import openfl.utils.AssetType;
 
 #if gl_stats
 import openfl.display._internal.stats.Context3DStats;
@@ -51,7 +52,7 @@ class FPS extends TextField
 		currentFPS = 0;
 		selectable = false;
 		mouseEnabled = false;
-		defaultTextFormat = new TextFormat("_sans", 14, color);
+		defaultTextFormat = new TextFormat(getFont(Paths.font("vcr.ttf")), 14, color);
 		autoSize = LEFT;
 		multiline = true;
 		text = "FPS: ";
@@ -88,7 +89,7 @@ class FPS extends TextField
 		if (currentCount != cacheCount /*&& visible*/)
 		{
 			text = "FPS: " + currentFPS;
-			text += "\nState: " + Type.getClass( FlxG.state );
+			// text += "\nState: " + Type.getClass( FlxG.state );
 			// TODO: Add substate info (idk how to get it :skull:)
 			//text += "\nSubstate: " + Type.getClass( FlxG.subState ); Yhis doesn't work as fricking flxg.substate just doesn't exist
 			//yet FlxG.State is a thing so annoying
@@ -117,5 +118,21 @@ class FPS extends TextField
 		}
 
 		cacheCount = currentCount;
+	}
+
+	public function getFont(Font:String):String
+	{
+		embedFonts = true;
+
+		var newFontName:String = Font;
+
+		if (Font != null)
+		{
+			if (Assets.exists(Font, AssetType.FONT))
+			{
+				newFontName = Assets.getFont(Font).fontName;
+			}
+		}
+		return newFontName;
 	}
 }

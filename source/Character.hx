@@ -74,6 +74,8 @@ class Character extends FlxSprite
 	public var cameraPosition:Array<Float> = [0, 0];
 
 	public var hasMissAnimations:Bool = false;
+	
+	public var rapidTrail:Bool = true;
 
 	public var kapiHeld:Bool = false;
 	public var originalFlipX:Bool = false;
@@ -322,7 +324,7 @@ class Character extends FlxSprite
 			}
 		}
 		super.update(elapsed);
-		trace('$lastAnims');
+		// trace('$lastAnims');
 	}
 
 	public var danced:Bool = false;
@@ -370,8 +372,8 @@ class Character extends FlxSprite
 	{
 		if (visible && animation.curAnim != null && !animation.curAnim.finished &&
 			(animation.curAnim.name.startsWith('sing') || animation.curAnim.name.startsWith('shoot')) &&
-			animation.curAnim.name != AnimName && animation.curAnim.curFrame <= 1 &&
-			AnimName != 'idle' && !AnimName.startsWith('dance')) {
+			animation.curAnim.name != AnimName && animation.curAnim.curFrame <= 1 && rapidTrail &&
+			AnimName != 'idle' && !AnimName.startsWith('dance') && !animation.curAnim.name.endsWith('loop')) {
 			ghost.x = x;
 			ghost.y = y;
 			ghost.scale = scale;
