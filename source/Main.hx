@@ -1,9 +1,13 @@
 package;
 
+import openfl.display.StageQuality;
+import openfl.filters.ShaderFilter;
 import flixel.graphics.FlxGraphic;
+import flixel.system.FlxAssets.FlxShader;
 import flixel.FlxG;
 import flixel.FlxGame;
 import flixel.FlxState;
+import flixel.FlxCamera;
 import openfl.Assets;
 import openfl.Lib;
 import openfl.display.FPS;
@@ -83,6 +87,7 @@ class Main extends Sprite
 	
 		ClientPrefs.loadDefaultKeys();
 		addChild(new FlxGame(gameWidth, gameHeight, initialState, zoom, framerate, framerate, skipSplash, startFullscreen));
+		FlxG.signals.gameResized.add(onResizeGame);
 
 		#if !mobile
 		fpsVar = new FPS(10, 3, 0xFFFFFF);
@@ -103,6 +108,33 @@ class Main extends Sprite
 		Lib.current.loaderInfo.uncaughtErrorEvents.addEventListener(UncaughtErrorEvent.UNCAUGHT_ERROR, onCrash);
 		#end
 	}
+
+	function onResizeGame(w:Int, h:Int) {
+		if (FlxG.cameras == null)
+			return;
+
+		for (cam in FlxG.cameras.list) {
+			@:privateAccess
+			if (cam != null && (cam._filters != null || cam._filters != []))
+				fixShaderSize(cam);
+		}	
+	}
+
+	function fixShaderSize(camera:FlxCamera) // Shout out to Ne_Eo for bringing this to my attention
+		{
+			@:privateAccess {
+				var sprite:Sprite = camera.flashSprite;
+	
+				if (sprite != null)
+				{
+					sprite.__cacheBitmap = null;
+					sprite.__cacheBitmapData = null;
+					sprite.__cacheBitmapData2 = null;
+					sprite.__cacheBitmapData3 = null;
+					sprite.__cacheBitmapColorTransform = null;
+				}
+			}
+		}
 
 	// Code was entirely made by sqirra-rng for their fnf engine named "Izzy Engine", big props to them!!!
 	// very cool person for real they don't get enough credit for their work
